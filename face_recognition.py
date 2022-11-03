@@ -41,6 +41,7 @@ def draw_ears(faces):
 
     return photo
 
+
 def recognize_faces():
     face_cascade = load_cascade()
     img = read_image()
