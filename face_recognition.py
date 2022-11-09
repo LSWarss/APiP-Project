@@ -1,5 +1,4 @@
 import cv2
-from PIL import Image, ImageOps
 
 
 def load_cascade():
@@ -11,7 +10,7 @@ def read_image():
 
 
 def read_ears():
-    return  cv2.imread('resources/shrek_ear.png')
+    return cv2.imread('resources/shrek_ear.png')
 
 
 def convert_to_grayscale(img):
@@ -27,21 +26,6 @@ def draw_rectangles(faces, img):
         cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
 
 
-def draw_ears(faces):
-    photo = Image.open('test.jpg')
-    ear = Image.open('resources/shrek_ear.png')
-    right_ear = ear.resize((30, 30))
-    left_ear = ImageOps.mirror(right_ear)
-
-    for (x, y, w, h) in faces:
-        photo.paste(right_ear, (int(x + w*2/3), y - h), right_ear)
-        photo.paste(left_ear, (int(x - w*3/10), y - h), left_ear)
-
-    photo.save('resources/paste.png')
-
-    return photo
-
-
 def recognize_faces():
     face_cascade = load_cascade()
     img = read_image()
@@ -49,9 +33,4 @@ def recognize_faces():
     faces = detect_faces(face_cascade, grayscale)
     draw_rectangles(faces, img)
 
-    # Display the output
-    # cv2.imshow('img', img)
-    # cv2.waitKey()
-
-    photo = draw_ears(faces)
-    photo.show()
+    return faces
