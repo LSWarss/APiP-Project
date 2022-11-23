@@ -1,12 +1,12 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
-from pydantic import BaseModel, Field
-from uuid import UUID, uuid4
 from ImageProcessing import ears_drawing, face_recognition
 from Resources.Paths import test_photo
 import models
 from database import engine, session_local
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
-
+from app import models
+from app.database import engine, session_local
 
 app = FastAPI()
 models.base.metadata.create_all(bind=engine)
