@@ -2,6 +2,11 @@ from cmath import log
 from fastapi import FastAPI, File, UploadFile, responses
 # from deta import Deta
 import os
+from ImageProcessing import ears_drawing, face_recognition
+
+faces = face_recognition.recognize_faces()
+photo = ears_drawing.draw_ears(faces, '/Users/psztefko/PycharmProjects/APiP-Project/Assets/test.jpg')
+photo.show()
 
 # PROJECT_KEY = os.environ['PROJECT_KEY']
 app = FastAPI()
