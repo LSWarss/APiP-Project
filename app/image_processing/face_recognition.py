@@ -1,4 +1,4 @@
-from Resources.Paths import haarcascade
+from app.resources.paths import haarcascade
 import cv2
 
 

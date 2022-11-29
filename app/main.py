@@ -1,12 +1,9 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
-from ImageProcessing import ears_drawing, face_recognition
-from Resources.Paths import test_photo
-import models
-from database import engine, session_local
-from pydantic import BaseModel
+from app.image_processing import ears_drawing, face_recognition
+from app.resources.paths import test_photo
 from sqlalchemy.orm import Session
 from app import models
-from app.database import engine, session_local
+from app.database import session_local, engine
 
 app = FastAPI()
 models.base.metadata.create_all(bind=engine)
@@ -25,10 +22,6 @@ photo = ears_drawing.draw_ears(faces, test_photo)
 photo.show()
 
 
-class Image(BaseModel):
-    url: str
-
-
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -45,7 +38,7 @@ async def get_image(id: int, db: Session = Depends(get_db)):
             detail=f"Image with ID: '{id}': Does not exist"
         )
 
-    image = Image(url=image_model.url)
+    image = models.Image(url=image_model.url)
     return image
 
 
@@ -65,7 +58,7 @@ async def post_image(file: UploadFile = File(...),
     return image_model
 
 
-@ app.delete("/api/image/{id}", status_code=204)
+@app.delete("/api/image/{id}", status_code=204)
 async def delete_image(id: int, db: Session = Depends(get_db)):
     image_model = db.query(models.Images).filter(
         models.Images.id == id).first()
@@ -80,6 +73,6 @@ async def delete_image(id: int, db: Session = Depends(get_db)):
     db.commit()
 
 
-@ app.get("/api/processing")
+@app.get("/api/processing")
 async def get_status():
     return {"status": "IN_PROGRESS"}

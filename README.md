@@ -26,7 +26,7 @@ uvicorn main:app
 ### How to run the app with hot reload
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 
