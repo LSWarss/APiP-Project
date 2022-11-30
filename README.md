@@ -26,10 +26,21 @@ uvicorn main:app
 ### How to run the app with hot reload
 
 ```bash
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 
 ### Full endpoints documentation with Swagger
 
 For full documentation go the https://localhost:8000/docs
+
+### How to build and run docker image
+
+```bash
+docker build -t apip-image .
+docker run -d --name apip-container -p 80:80 apip-image 
+```
+
+## Swagger UI Documentation 
+
+You can access swagger documentation of the application under address [0.0.0.0/docs](http://0.0.0.0/docs)
