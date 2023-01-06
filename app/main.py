@@ -1,7 +1,8 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from fastapi.responses import FileResponse
+from fastapi.openapi.utils import get_openapi
+from fastapi.staticfiles import StaticFiles
 from app.image_processing import ears_drawing, face_recognition
-from app.resources.paths import test_photo
 from sqlalchemy.orm import Session
 from app import models
 from app.database import session_local, engine
@@ -9,6 +10,26 @@ from os import getcwd, path
 
 app = FastAPI()
 models.base.metadata.create_all(bind=engine)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="ShrekIt",
+        version="0.1.0",
+        description="Our main goal is to Shrek it!",
+        routes=app.routes
+    )
+    openapi_schema["info"]["x-logo"] = {
+        "url": "static/shrekitlogo.png"
+    }
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
 
 
 def get_db():
