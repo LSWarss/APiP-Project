@@ -1,5 +1,13 @@
 # APiP-Project
-Advanced Programming with Python - Project
+
+![Shrek IT](/static/shrekitlogo.png)
+
+[![Docker Image and Deploy](https://github.com/VerticalHeretic/APiP-Project/actions/workflows/docker-image.yml/badge.svg?branch=main)](https://github.com/VerticalHeretic/APiP-Project/actions/workflows/docker-image.yml) 
+[![Lint and test](https://github.com/VerticalHeretic/APiP-Project/actions/workflows/python-app.yml/badge.svg?branch=main)](https://github.com/VerticalHeretic/APiP-Project/actions/workflows/python-app.yml)
+
+Advanced Programming with Python - Project 
+
+ShrekIT! Great small web app for adding Shrek Ears to your photos 🚀
 
 ## Dependencies
 
@@ -44,3 +52,12 @@ docker run -d --name apip-container -p 80:80 apip-image
 ## Swagger UI Documentation 
 
 You can access swagger documentation of the application under address [0.0.0.0/docs](http://0.0.0.0/docs)
+
+## How to Deploy 
+
+Deployment of the app is made with [Docker Registry](https://hub.docker.com/repository/docker/lswarss/shrekit/general) and DigitialOcean App Platform. And to trigger deployment you must:
+
+- Add new release tag on Github with pattern: v*
+- Or merge pull request to main branch
+
+Those actions will trigger [deployment pipeline](https://github.com/VerticalHeretic/APiP-Project/actions/workflows/docker-image.yml) and create new build in registry + deploy it to DigitialOcean.
